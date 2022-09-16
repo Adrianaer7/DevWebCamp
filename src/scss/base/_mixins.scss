@@ -48,7 +48,7 @@
 }
 
 @mixin contenedor {
-    width: min(95%, 120rem);
+    width: min(95%, 140rem);
     margin: 0 auto;
 }
 
@@ -67,4 +67,62 @@
     @include headings;
     margin: 6rem 0 3rem 0;
     text-align: center;
+}
+
+@mixin texto-fluido($min, $max) {
+    font-size: clamp($min, -0.8rem + 10vw ,$max);   //con clamp hago un texto fluido, le paso un valor minimo de tamaño de fuente, un maximo, y el valor del medio es el temaño que va a tomar el texto cuando el texto no llegue a su tamaño minimo ni maximo
+}
+
+@mixin texto-degradado($inicio, $final) {
+    background: linear-gradient(to right, $inicio, $final);
+    -webkit-background-clip: text;  //para que el degradato solo se aplique al texto y no al fondo
+    color: transparent;
+}
+
+@mixin logo {
+    color: v.$blanco;
+    text-align: center;
+    margin-bottom: 2rem;
+    @include desktop {
+        text-align: left;
+        margin: 0;
+    }
+}
+
+@mixin menu-social($color, $size) {
+    &__enlace { //a
+        &::before {
+            color: $color;  //color al icono
+            display: inline-block;
+            font-size: $size;   //tamaño al icono
+            font-style: normal;
+            font-family: "Font Awesome 6 Brands";
+            text-rendering: auto;   //se aplica a los svg
+            -webkit-smoothing: antialiased; //para que los svg se vean bien
+        }
+
+        &[href*="https://www.facebook.com"]::before {   //encuentra todos los enlaces que tengan ese href y le coloca el icono. Cada icono de font awesome tiene un codigo
+            content: "\f09a";
+        }
+        &[href*="https://www.tiktok.com"]::before {
+            content: "\e07b";
+        }
+        &[href*="https://www.instagram.com"]::before {
+            content: "\f16d";
+        }
+        &[href*="https://www.youtube.com"]::before {
+            content: "\f167";
+        }
+        &[href*="https:/www./twitter.com"]::before {
+            content: "\f099";
+        }
+        &[href*="https://www.github.com"]::before {
+            content: "\f09b";
+        }
+        
+    }
+
+    &__ocultar {
+        display: none;
+    }
 }

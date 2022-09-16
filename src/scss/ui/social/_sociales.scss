@@ -1,0 +1,13 @@
+@use "base/variables" as v;
+@use "base/mixins" as m;
+
+.menu-redes {   //nav
+    @include m.menu-social(v.$blanco, 2rem);    //le doy color y tamaño al icono
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin: 4rem 0;
+    @include m.tablet {
+        justify-content: flex-end;
+    }
+}
