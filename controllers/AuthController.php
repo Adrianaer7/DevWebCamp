@@ -64,7 +64,7 @@ class AuthController {
         $usuario = new Usuario;
 
         if($_SERVER['REQUEST_METHOD'] === 'POST') {
-
+           
             $usuario->sincronizar($_POST);
             
             $alertas = $usuario->validar_cuenta();
@@ -84,8 +84,8 @@ class AuthController {
 
                     // Generar el Token
                     $usuario->crearToken();
-
                     // Crear un nuevo usuario
+                    
                     $resultado =  $usuario->guardar();
 
                     // Enviar email
@@ -190,7 +190,7 @@ class AuthController {
 
                 // Redireccionar
                 if($resultado) {
-                    header('Location: /');
+                    header('Location: /login');
                 }
             }
         }

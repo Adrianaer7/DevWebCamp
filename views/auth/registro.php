@@ -15,6 +15,7 @@
                 id="nombre"
                 class="formulario__input"
                 placeholder="Tu nombre"
+                value="<?php echo $usuario->nombre?>"
             >
 
             <label for="apellido" class="formulario__label">Apellido</label>
@@ -24,6 +25,7 @@
                 id="apellido"
                 class="formulario__input"
                 placeholder="Tu apellido"
+                value="<?php echo $usuario->apellido?>"
             >
 
             <label for="email" class="formulario__label">Email</label>
@@ -33,6 +35,7 @@
                 id="email"
                 class="formulario__input"
                 placeholder="Tu email"
+                value="<?php echo $usuario->email?>"
             >
 
             <label for="password" class="formulario__label">Contraseña</label>
