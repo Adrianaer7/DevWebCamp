@@ -79,7 +79,7 @@
     color: transparent;
 }
 
-@mixin logo {
+@mixin logo {   //h1/h2/h3
     color: v.$blanco;
     text-align: center;
     margin-bottom: 2rem;
@@ -124,5 +124,18 @@
 
     &__ocultar {
         display: none;
+    }
+}
+
+@mixin enlace { //a
+    all: unset; //quito todos los estilos por default que vienen
+    color: v.$blanco;
+    font-size: 1.4rem;
+    text-transform: uppercase;
+    font-weight: v.$bold;
+
+    &:hover {
+        color: v.$azul;
+        cursor: pointer;
     }
 }

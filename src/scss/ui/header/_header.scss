@@ -27,14 +27,7 @@
     }
 
     &__enlace { //a
-        color: v.$blanco;
-        font-size: 1.4rem;
-        text-transform: uppercase;
-        font-weight: v.$bold;
-
-        &:hover {
-            color: v.$azul;
-        }
+        @include m.enlace;
     }
 
     &__contenido {  //div
