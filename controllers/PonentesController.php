@@ -12,6 +12,14 @@
                 "titulo" => $titulo
             ]);
         }
+
+        public static function crear(Router $router) {
+            $titulo = "Registrar Ponente";
+
+            $router->render("admin/ponentes/crear", [
+                "titulo" => $titulo
+            ]);
+        }
     }
 
 ?>
