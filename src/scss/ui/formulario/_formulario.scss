@@ -23,6 +23,22 @@
         gap: 1rem;
         margin: 1.5rem 0;
     }
+    &__contenedor-icono {   //div
+        display: flex;
+        border-radius: .5rem;
+        overflow: hidden;   //si no le pongo esto no se aplica el radius
+    }
+    &__icono {  //div
+        background-color: v.$gris-oscuro;
+        width: 4rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        i {
+            color: v.$blanco;
+            font-size: 2rem;
+        }
+    }
     &__label {
         display: block;
         font-size: 1.8rem;
@@ -35,6 +51,12 @@
 
         &--file {
             border: none;
+        }
+        &--sociales {
+            @extend .formulario__input;
+            flex: 1;    //que tome todo el ancho que no ocupa el div de icono
+            border-top-left-radius: 0;  //quito los bordes curvos izquierdos al input
+            border-bottom-left-radius: 0;
         }
     }
     &__submit {
