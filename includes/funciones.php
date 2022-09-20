@@ -1,9 +1,9 @@
 <?php
 
-function debuguear($variable) : string {
-    echo "<pre>";
+function debugear($variable) : string {
+    echo '<pre>';
     var_dump($variable);
-    echo "</pre>";
+    echo '</pre>';
     exit;
 }
 function s($html) : string {
