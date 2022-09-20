@@ -1,6 +1,7 @@
 <?php 
     namespace Controllers;
 
+    use Model\Ponente;
     use MVC\Router;
 
     class PonentesController {
@@ -15,9 +16,20 @@
 
         public static function crear(Router $router) {
             $titulo = "Registrar Ponente";
+            $alertas = [];
+            $ponente = new Ponente;
+
+            if($_SERVER["REQUEST_METHOD"] === "POST") {
+                $ponente->sincronizar($_POST);
+                
+                //Validar
+                $alertas = $ponente->validar();
+            }
 
             $router->render("admin/ponentes/crear", [
-                "titulo" => $titulo
+                "titulo" => $titulo,
+                "alertas" => $alertas,
+                "ponente" => $ponente
             ]);
         }
     }

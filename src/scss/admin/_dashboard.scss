@@ -44,6 +44,7 @@
     &__grid {   //Este div contiene __sidebar y __contenido
         display: flex;
         flex: 1;    //la altura que no ocupa el header lo toma este div
+        overflow-y: auto;   //como el sidebar tiene pocos elementos no añade scroll, pero el contenido sí tiene elementos por eso añade scroll. Es una manera de dejar fijo el sidebar y el header
     }
 
     &__sidebar {    //aside
@@ -86,7 +87,7 @@
     &__contenido {
         padding: 1rem 1rem 3rem 1rem;
         width: 100%;
-        
+        overflow-y: scroll; //solo hago scroll al div contenido. El sidebar se queda quieto
         @include m.tablet {
             padding: 1rem 5rem 3rem 5rem;
         }
