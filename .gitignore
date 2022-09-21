@@ -2,5 +2,5 @@ node_modules
 vendor
 dependencias.txt
 .env
-speakers/*.png
-speakers/*.webp
+/speakers/*.png
+/speakers/*.webp
