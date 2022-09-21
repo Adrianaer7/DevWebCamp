@@ -54,7 +54,7 @@
             id="imagen"
         >
     </div>
-    <?php if($ponente->imagen_actual && $_SERVER["SCRIPT_NAME"] !== "/admin/ponentes/crear.php") { ?>
+    <?php if(isset($ponente->imagen_actual) && $_SERVER["SCRIPT_NAME"] !== "/admin/ponentes/crear.php") { ?>
         <p class="formulario__texto">Imagen actual</p>
         <div class="formulario__imagen">
             <picture>

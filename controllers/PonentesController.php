@@ -49,8 +49,8 @@
                 $_POST["redes"] = json_encode($_POST["redes"], JSON_UNESCAPED_SLASHES);
 
                 //Envio al objeto en memoria el $POST con el nombre de la imagen cambiada y las redes en forma de string
-                $ponente->sincronizar($_POST);
-                
+                $ponente = new Ponente($_POST);
+
                 //Validar
                 $alertas = $ponente->validar();
 
@@ -80,7 +80,6 @@
         public static function editar(Router $router) {
             $titulo = "Editar Ponente";
             $alertas = [];
-            $ponente = "";
 
             //Verificar si el id es entero
             $id = $_GET["id"];
@@ -99,7 +98,32 @@
             //Creo una variable temporal para usarla en el formulario.html
             $ponente->imagen_actual = $ponente->imagen;
 
-            
+            if($_SERVER["REQUEST_METHOD"] === "POST") {
+                //Si cargué una imagen reciente
+                if(!empty($_FILES["imagen"]["tmp_name"])) {
+                    $carpeta_imagenes = "../public/img/speakers";
+
+                    //Crear la carpeta si no existe
+                    if(!is_dir($carpeta_imagenes)) {
+                        mkdir($carpeta_imagenes, 0755, true);    //le paso la ruta, el codigo para permitir ciertos permisos, y el permiso para crear subdirectorios sobre la ruta especiifcada
+                    }
+
+                    //dejo estas imagenes en memoria
+                    $imagen_png = Image::make($_FILES["imagen"]["tmp_name"])->fit(800,800)->encode("png", 80);  //guardo la imagen en 800px con formato png y en calidad 80%. Intervention Image no soporta avif asi que lo hago a png y webp
+                    $imagen_webp = Image::make($_FILES["imagen"]["tmp_name"])->fit(800,800)->encode("webp", 80);
+
+                    //Creo un nombre para las imagenes
+                    $nombre_imagen = md5(uniqid(rand(), true));
+
+                    //Agrego el nombre de la imagen al formulario
+                    $_POST["imagen"] = $nombre_imagen;
+                } else {
+                    //Si no cargué imagen, le pongo aal formulario la que viene de la bd
+                    $_POST["imagen"] = $ponente->imagen_actual;
+                }
+
+                $ponente->sincronizar($_POST);
+            }
 
             $router->render("admin/ponentes/editar", [
                 "titulo" => $titulo,
