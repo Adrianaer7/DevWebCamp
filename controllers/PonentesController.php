@@ -50,7 +50,7 @@
 
                 //Envio al objeto en memoria el $POST con el nombre de la imagen cambiada y las redes en forma de string
                 $ponente->sincronizar($_POST);
-                debugear($ponente);
+                
                 //Validar
                 $alertas = $ponente->validar();
 
