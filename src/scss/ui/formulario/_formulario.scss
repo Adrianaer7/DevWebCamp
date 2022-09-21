@@ -59,7 +59,13 @@
             border-bottom-left-radius: 0;
         }
     }
-    &__listado {
+    &__texto {
+        margin-top: 3rem;
+    }  
+    &__imagen {
+        max-width: 20rem;
+    }
+    &__listado {    //div
         @include m.tags;
     }
     &__submit {
@@ -71,4 +77,5 @@
             width: 100%;
         }
     }
+
 }

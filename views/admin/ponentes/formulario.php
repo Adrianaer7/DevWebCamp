@@ -9,7 +9,7 @@
             name="nombre" 
             id="nombre"
             placeholder="Nombre del ponente"
-            value="<?php echo $ponente->nombre ?? "" ?>"
+            value="<?php echo s($ponente->nombre) ?? "" ?>"
         >
     </div>
     <div class="formulario__campo">
@@ -20,7 +20,7 @@
             name="apellido" 
             id="apellido"
             placeholder="Apellido del ponente"
-            value="<?php echo $ponente->apellido ?? "" ?>"
+            value="<?php echo s($ponente->apellido) ?? "" ?>"
         >
     </div>
     <div class="formulario__campo">
@@ -31,7 +31,7 @@
             name="pais" 
             id="pais"
             placeholder="Pais del ponente"
-            value="<?php echo $ponente->pais ?? "" ?>"
+            value="<?php echo s($ponente->pais) ?? "" ?>"
         >
     </div>
     <div class="formulario__campo">
@@ -42,7 +42,7 @@
             name="ciudad" 
             id="ciudad"
             placeholder="Ciudad del ponente"
-            value="<?php echo $ponente->ciudad ?? "" ?>"
+            value="<?php echo s($ponente->ciudad) ?? "" ?>"
         >
     </div>
     <div class="formulario__campo">
@@ -54,6 +54,25 @@
             id="imagen"
         >
     </div>
+    <?php if($ponente->imagen_actual && $_SERVER["SCRIPT_NAME"] !== "/admin/ponentes/crear.php") { ?>
+        <p class="formulario__texto">Imagen actual</p>
+        <div class="formulario__imagen">
+            <picture>
+                <source 
+                    srcset="<?php echo '/img/speakers/' . $ponente->imagen ;?>.webp"
+                    type="image/webp"
+                >
+                <source 
+                    srcset="<?php echo '/img/speakers/' . $ponente->imagen ;?>.png"
+                    type="image/png"
+                >
+                <img 
+                    src="<?php echo '/img/speakers/' . $ponente->imagen ;?>.png" 
+                    alt="Imagen Ponente"
+                >
+            </picture>
+        </div>
+    <?php }; ?>
 </fieldset>
 
 <fieldset class="formulario__fieldset">
@@ -67,13 +86,13 @@
             id="tags_input"
             placeholder="Ej. Node.js, React.js, etc..."
         >
-        <div class="formulario__listado" id="tags">
-
+        <div class="formulario__listado" id="tags"> <!--dentro del div, incluyo los li creados en el tags.js-->
+            
         </div>
         <input 
             type="hidden"
             name="tags"
-            value="<?php echo $ponente->tags ?? "" ?>"
+            value="<?php echo s($ponente->tags) ?? "" ?>"
         >
     </div>
 </fieldset>
@@ -91,7 +110,7 @@
                 class="formulario__input--sociales"
                 name="redes[facebook]" 
                 placeholder="Facebook"
-                value="<?php echo $ponente->facebook ?? "" ?>"
+                value="<?php echo s($redes->facebook) ?? "" ?>"
             >
         </div>
     </div>
@@ -106,7 +125,7 @@
                 class="formulario__input--sociales"
                 name="redes[twitter]" 
                 placeholder="Twitter"
-                value="<?php echo $ponente->twitter ?? "" ?>"
+                value="<?php echo s($redes->twitter) ?? "" ?>"
             >
         </div>
     </div>
@@ -121,7 +140,7 @@
                 class="formulario__input--sociales"
                 name="redes[youtube]" 
                 placeholder="YouTube"
-                value="<?php echo $ponente->youtube ?? "" ?>"
+                value="<?php echo s($redes->youtube) ?? "" ?>"
             >
         </div>
     </div>
@@ -136,7 +155,7 @@
                 class="formulario__input--sociales"
                 name="redes[instagram]" 
                 placeholder="Instagram"
-                value="<?php echo $ponente->instagram ?? "" ?>"
+                value="<?php echo s($redes->instagram) ?? "" ?>"
             >
         </div>
     </div>
@@ -151,7 +170,7 @@
                 class="formulario__input--sociales"
                 name="redes[tiktok]" 
                 placeholder="TikTok"
-                value="<?php echo $ponente->tiktok ?? "" ?>"
+                value="<?php echo s($redes->tiktok) ?? "" ?>"
             >
         </div>
     </div>
@@ -166,7 +185,7 @@
                 class="formulario__input--sociales"
                 name="redes[github]" 
                 placeholder="GitHub"
-                value="<?php echo $ponente->github ?? "" ?>"
+                value="<?php echo s($redes->github) ?? "" ?>"
             >
         </div>
     </div>

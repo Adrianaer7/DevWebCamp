@@ -5,6 +5,12 @@
         const tagsInputHidden = document.querySelector("[name='tags']")
         let tags = []
 
+        //Recuperar del input oculto
+        if(tagsInputHidden.value !== "") {
+            tags = tagsInputHidden.value.split(",") //el value del input oculto que viene de la bd en forma de string lo convierto a array
+            mostrarTags()
+        }
+
         //Escuchar los cambios en el input. keypress es escuchar al ingreso de letras
         tagsInput.addEventListener("keypress", guardarTag)
 

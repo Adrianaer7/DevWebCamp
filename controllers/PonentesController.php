@@ -23,10 +23,10 @@
             $titulo = "Registrar Ponente";
             $alertas = [];
             $ponente = new Ponente;
+
             if($_SERVER["REQUEST_METHOD"] === "POST") {
 
                 if(!empty($_FILES["imagen"]["tmp_name"])) {
-
                     $carpeta_imagenes = "../public/img/speakers";
 
                     //Crear la carpeta si no existe
@@ -45,11 +45,12 @@
                     $_POST["imagen"] = $nombre_imagen;
                 }
 
-                //Con enconde convierto el array redes a string, y con json_unescaped quito las barras invertidas que crea el encode. Hago esto porque el metodo sanitizar atributos en activeRecord no acepta array, solo string
+                //Con enconde convierto el array redes a un string, y con json_unescaped quito las barras invertidas que crea el encode. Hago esto porque el metodo sanitizar atributos en activeRecord no acepta array, solo string
                 $_POST["redes"] = json_encode($_POST["redes"], JSON_UNESCAPED_SLASHES);
 
+                //Envio al objeto en memoria el $POST con el nombre de la imagen cambiada y las redes en forma de string
                 $ponente->sincronizar($_POST);
-                
+                debugear($ponente);
                 //Validar
                 $alertas = $ponente->validar();
 
@@ -71,7 +72,40 @@
             $router->render("admin/ponentes/crear", [
                 "titulo" => $titulo,
                 "alertas" => $alertas,
-                "ponente" => $ponente
+                "ponente" => $ponente,
+                "redes" => json_decode($ponente->redes) //Al string de lo convierto a objeto para que tenga el mismo nombre "redes" el value del input tanto al crear como al editar
+            ]);
+        }
+
+        public static function editar(Router $router) {
+            $titulo = "Editar Ponente";
+            $alertas = [];
+            $ponente = "";
+
+            //Verificar si el id es entero
+            $id = $_GET["id"];
+            $id = filter_var($id, FILTER_VALIDATE_INT);
+            if(!$id) {
+                header("Location: /admin/ponentes");
+            }
+
+            //Obtener ponente a editar
+            $ponente = Ponente::find($id);
+            //Verificar si el id existe en la bd
+            if(!$ponente) {
+                header("Location: /admin/ponentes");
+            }
+
+            //Creo una variable temporal para usarla en el formulario.html
+            $ponente->imagen_actual = $ponente->imagen;
+
+            
+
+            $router->render("admin/ponentes/editar", [
+                "titulo" => $titulo,
+                "alertas" => $alertas,
+                "ponente" => $ponente,
+                "redes" => json_decode($ponente->redes) //Al string de redes que viene desde la bd lo convierto a objeto
             ]);
         }
     }
