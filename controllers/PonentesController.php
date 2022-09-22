@@ -2,6 +2,7 @@
 
     namespace Controllers;
 
+    use Classes\Paginacion;
     use Model\Ponente;
     use MVC\Router;
     use Intervention\Image\ImageManagerStatic as Image;
@@ -10,12 +11,38 @@
         
         public static function index(Router $router) {
             $titulo = "Ponentes / Conferencistas";
+            
+            //Si no soy administrador, no puedo acceder al listado de ponentes
+            if(!is_admin()) {
+                header("Location: /login");
+            }
 
-            $ponentes = Ponente::all();
+            //Validar paginacion de url
+            $pagina_actual = $_GET["page"];
+            $pagina_actual = filter_var($pagina_actual, FILTER_VALIDATE_INT);
+            if(!$pagina_actual || $pagina_actual < 1) {
+                header("Location: /admin/ponentes?page=1"); //redirecciono a la primera pagina. De paso se le asigna $pagina_actual = 1 
+            }
+            $registros_por_pagina = 10;
+            //Obtener total de regisros
+            $total = Ponente::total();
+        
+            //Creo lo necesario para paginar
+            $paginacion = new Paginacion($pagina_actual, $registros_por_pagina, $total);
+
+            //si en la url ingreso un numero mayor a las paginas calculadas por $total_paginas()
+            if($pagina_actual > $paginacion->total_paginas()) {
+                header("Location: /admin/ponentes?page=1");
+
+            }
+
+            //Traigo la cantidad de registros que quiero desde la bd
+            $ponentes = Ponente::paginar($registros_por_pagina, $paginacion->offset());
             
             $router->render("admin/ponentes/index", [
                 "titulo" => $titulo,
-                "ponentes" => $ponentes
+                "ponentes" => $ponentes,
+                "paginacion" => $paginacion->paginacion()
             ]);
         }
 
@@ -23,6 +50,10 @@
             $titulo = "Registrar Ponente";
             $alertas = [];
             $ponente = new Ponente;
+
+            if(!is_admin()) {
+                header("Location: /login");
+            }
 
             if($_SERVER["REQUEST_METHOD"] === "POST") {
 
@@ -81,6 +112,10 @@
             $titulo = "Editar Ponente";
             $alertas = [];
 
+            if(!is_admin()) {
+                header("Location: /login");
+            }
+
             //Verificar si el id es entero
             $id = $_GET["id"];
             $id = filter_var($id, FILTER_VALIDATE_INT);
@@ -118,11 +153,31 @@
                     //Agrego el nombre de la imagen al formulario
                     $_POST["imagen"] = $nombre_imagen;
                 } else {
-                    //Si no cargué imagen, le pongo aal formulario la que viene de la bd
+                    //Si no cargué imagen, le pongo al formulario la que viene de la bd
                     $_POST["imagen"] = $ponente->imagen_actual;
                 }
 
+                $_POST["redes"] = json_encode($_POST["redes"], JSON_UNESCAPED_SLASHES);
+
                 $ponente->sincronizar($_POST);
+
+                $alertas = $ponente->validar();
+
+                //Guardar el registro editado
+                if(empty($alertas)) {
+                    if(isset($nombre_imagen)) { //Si existe es porque se subio una imagen nueva
+                        //Guardar las imagenes
+                        $imagen_png->save($carpeta_imagenes . "/" . $nombre_imagen . ".png");
+                        $imagen_webp->save($carpeta_imagenes . "/" . $nombre_imagen . ".webp");
+    
+                    }
+                    //Guardar en la BD
+                    $resultado = $ponente->guardar();
+
+                    if($resultado) {
+                        header("Location: /admin/ponentes");
+                    }
+                }
             }
 
             $router->render("admin/ponentes/editar", [
@@ -132,6 +187,27 @@
                 "redes" => json_decode($ponente->redes) //Al string de redes que viene desde la bd lo convierto a objeto
             ]);
         }
+
+        public static function eliminar() {
+            if(!is_admin()) {
+                header("Location: /login");
+            }
+
+            if($_SERVER["REQUEST_METHOD"] === "POST") {
+                $id = $_POST["id"];
+                $ponente = Ponente::find($id);
+                
+                if(isset($ponente)) {
+                    $resultado = $ponente->eliminar();
+                    if($resultado) {
+                        header("Location: /admin/ponentes");    //redirecciono para que se refresque la pantalla con el listado actualizado
+                    }
+                } else {
+                    header("Location: /admin/ponentes");
+                }
+            }
+        }
+
     }
 
 ?>
