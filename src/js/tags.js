@@ -47,4 +47,4 @@
             tagsInputHidden.value = tags.toString() //coloco todos lo que haya en el array de tags en el value del input oculto
         }
     }
-}) ()
+}) ();
