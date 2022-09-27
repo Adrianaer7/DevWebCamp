@@ -10,6 +10,7 @@
         const categoria = document.querySelector('[name="categoria_id"]')   //select del tipo de evento
         const dias = document.querySelectorAll('[name="dia"]')  //inputs radio
         const inputHiddenDia = document.querySelector('[name="dia_id"]')
+        const inputHiddenHora = document.querySelector('[name="hora_id"]')
 
         //cuando se detecte cambios en el select de categoria o en el input de dia, envio sus values al objeto
         categoria.addEventListener("change", terminoBusqueda)
@@ -36,7 +37,22 @@
         }
 
         function obtenerHorasDisponibles() {
-            
+            const horasDisponibles = document.querySelectorAll("#horas li") //selecciono todos los li de horas
+            horasDisponibles.forEach(hora => hora.addEventListener("click", seleccionarHora))
+        }
+
+        function seleccionarHora(e) {
+            //Deshabilitar la hora seleccionada anteriormente si hay un nuevo click
+            const horaPrevia = document.querySelector(".horas__hora--seleccionada")
+            if(horaPrevia) {
+                horaPrevia.classList.remove("horas__hora--seleccionada")
+            }
+
+            //Agregar clase a la hora seleccionada
+            e.target.classList.add("horas__hora--seleccionada") //agrego la clase al li que clickee
+
+            //Agregar id de la hora al campo oculto
+            inputHiddenHora.value = e.target.dataset.horaId //dataset hace referencia a el atributo personalizado llamado "data-hora-id" en el formulario
         }
     }
 }) ();
