@@ -3,9 +3,9 @@
 
     use Model\Categoria;
     use Model\Dia;
-use Model\Evento;
-use Model\Hora;
-use MVC\Router;
+    use Model\Evento;
+    use Model\Hora;
+    use MVC\Router;
 
     class EventosController {
         
