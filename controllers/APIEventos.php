@@ -1,7 +1,7 @@
 <?php 
     namespace Controllers;
 
-use Model\EventoHorario;
+    use Model\EventoHorario;
 
     class APIEventos {
         public static function index() {

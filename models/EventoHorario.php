@@ -9,7 +9,5 @@
         public $categoria_id;
         public $dia_id;
         public $hora_id;
-
-
     }
 ?>
