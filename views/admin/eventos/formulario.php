@@ -84,11 +84,11 @@
     <legend class="formulario__legend">Informacion extra</legend>
 
     <div class="formulario__campo">
-        <label for="ponente" class="formulario__label">Ponente</label>
+        <label for="ponentes" class="formulario__label">Ponente</label>
         <input 
             type="text"
             class="formulario__input"
-            id="ponente"
+            id="ponentes"
             placeholder="Busca el nombre del ponente"
         />
     </div>

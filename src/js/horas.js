@@ -20,8 +20,9 @@
             //Guardo el value del elemento html en el objeto
             busqueda[e.target.name] = e.target.value
 
-            //Reiniciar los campos ocultos y el selector de horas
+            //Reiniciar los campos ocultos
             inputHiddenHora.value = ""
+            inputHiddenDia.value = ""
 
             //Deshabilitar estilos de la hora seleccionada anteriormente si hay un nuevo click en dias o categoria
             const horaPrevia = document.querySelector(".horas__hora--seleccionada")
@@ -40,7 +41,6 @@
             const {categoria_id, dia} = busqueda
             
             const url = `/api/eventos-horario?dia_id=${dia}&categoria_id=${categoria_id}`
-            console.log(url)
             const resultado = await fetch(url)  //le hago un get a la url
             const eventos = await resultado.json()  //consumo los datos provenientes del echo del APIEventos.php
             
@@ -86,7 +86,7 @@
             inputHiddenHora.value = e.target.dataset.horaId //dataset hace referencia a el atributo personalizado llamado "data-hora-id" en el li del formulario
 
             //Agregar id del dia al campo oculto
-            inputHiddenDia.value = document.querySelector('[name="dia"]:checked').value
+            inputHiddenDia.value = document.querySelector('[name="dia"]:checked').value //selecciono el elemento con name=dia pero que sea el que está clickeado
         }
     }
 }) ();
