@@ -56,12 +56,12 @@
                             value="<?php echo $dia->id?>"
                         >
                     </div>
-                    <input 
-                        type="hidden"
-                        name="dia_id"
-                        value=""
-                    >
                 <?php } ?>
+                <input 
+                    type="hidden"
+                    name="dia_id"
+                    value=""
+                >
         </div>
     </div>
 

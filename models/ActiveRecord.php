@@ -143,7 +143,7 @@ class ActiveRecord {
         foreach($array as $key => $value) {
             if($key == array_key_last($array)) {    //cuando detecte el ultimo elemento
                 $query .= " $key  = '$value' "; //realizo este query
-
+                
             } else {
                 $query .= " $key  = '$value' AND";  //sino agrego AND al query
             }
