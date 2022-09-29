@@ -2,11 +2,7 @@
     const horas = document.querySelector("#horas")
 
     if(horas) {
-        let busqueda = {
-            categoria_id: "",
-            dia: ""
-        }
-
+        
         const categoria = document.querySelector('[name="categoria_id"]')   //select del tipo de evento
         const dias = document.querySelectorAll('[name="dia"]')  //inputs radio
         const inputHiddenDia = document.querySelector('[name="dia_id"]')
@@ -15,6 +11,36 @@
         //cuando se detecte cambios en el select de categoria o en el input de dia, envio sus values al objeto
         categoria.addEventListener("change", terminoBusqueda)
         dias.forEach(dia => dia.addEventListener("change", terminoBusqueda))
+
+        let busqueda = {
+            categoria_id: +categoria.value ?? "",    //guardo el value del select de la categorias traidas de la bd si estoy en el formulario de editar. Si es el form de crear, inicia vacio. Le pongo el + adelante para convertir el valor de string a integer
+            dia: +inputHiddenDia.value ?? ""    //guardo el value que traigo del dia_id guardado en el evento en la bd si estoy en el formulario de editar. Si es el form de crear, inicia vacio. Le pongo el + adelante para convertir el valor de string a integer
+        }
+
+        //Si el busqueda ya contiene los datos de la bd, busco el evento directamente. Sino, tengo que esperar que haya un eventlistener para que se llene el objeto busqueda
+        if(!Object.values(busqueda).includes("")) {
+            //Creo esta funcio IIFE que se llama automaticamente
+            (async () => {
+                //Busco el evento segun lo que tenga en el objeto busqueda
+                await buscarEventos()
+
+                //Guardo el id del input oculto, que se llena manualmente clikeando la hora o trayendo la hora de la bd. 
+                const id = inputHiddenHora.value
+
+                //Selecciono el li que contenga el mismo valor que el input oculto en su atributo
+                const horaSeleccionada = document.querySelector(`[data-hora-id="${id}"]`)
+
+                //Le quito la calse deshabilitada
+                horaSeleccionada.classList.remove("horas__hora--deshabilitada")
+
+                //Le añado la clase seleccionada para identificar que ésta es la hora que se seleccionó y guardó en la bd del evento a editar
+                horaSeleccionada.classList.add("horas__hora--seleccionada")
+
+                //si le hago click a otra hora, y luego a esta seleccionada, elimino las clases y valores que se le asignaron al li e imput de la otra hora y se los asigno a esta
+                horaSeleccionada.onclick = seleccionarHora
+            }) ();
+        }
+
 
         function terminoBusqueda(e) {
             //Guardo el value del elemento html en el objeto
