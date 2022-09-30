@@ -1,19 +1,23 @@
 <?php 
     namespace Controllers;
 
-use Classes\Paginacion;
-use Model\Categoria;
+    use Classes\Paginacion;
+    use Model\Categoria;
     use Model\Dia;
     use Model\Evento;
     use Model\Hora;
-use Model\Ponente;
-use MVC\Router;
+    use Model\Ponente;
+    use MVC\Router;
 
     class EventosController {
         
         public static function index(Router $router) {
             $titulo = "Conferencias y Workshops";
 
+            if(!is_admin()) {
+                header("Location: /login");
+            }
+            
             //Valido URL
             $pagina_actual = $_GET["page"];
             $pagina_actual = filter_var($pagina_actual, FILTER_VALIDATE_INT);
@@ -57,8 +61,12 @@ use MVC\Router;
         public static function crear(Router $router) {
             $titulo = "Registrar evento";
             $alertas = [];
-            $evento = new Evento;
+            
+            if(!is_admin()) {
+                header("Location: /login");
+            }
 
+            $evento = new Evento;
             $categorias = Categoria::all("ASC");
             $dias = Dia::all("ASC");
             $horas = Hora::all("ASC");
@@ -89,6 +97,10 @@ use MVC\Router;
         public static function editar(Router $router) {
             $titulo = "Editar evento";
             $alertas = [];
+
+            if(!is_admin()) {
+                header("Location: /login");
+            }
             
             $id = $_GET["id"];
             $id = filter_var($id, FILTER_VALIDATE_INT);
@@ -128,6 +140,26 @@ use MVC\Router;
                 "horas" => $horas,
                 "evento" => $evento
             ]);
+        }
+
+        public static function eliminar() {
+            if($_SERVER["REQUEST_METHOD"] === "POST") {
+                if(!is_admin()) {
+                    header("Location: /login");
+                }
+
+                $id = $_POST["id"];
+                $evento = Evento::find($id);
+                
+                if(isset($evento)) {
+                    $resultado = $evento->eliminar();
+                    if($resultado) {
+                        header("Location: /admin/eventos");    //redirecciono para que se refresque la pantalla con el listado actualizado
+                    }
+                } else {
+                    header("Location: /admin/eventos");
+                }
+            }
         }
     }
 

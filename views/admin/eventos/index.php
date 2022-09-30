@@ -39,7 +39,7 @@
                                 <i class="fa-solid fa-pencil"></i>
                                 Editar
                             </a>
-                            <form class="table__formulario" method="POST" action="/admin/evento/eliminar">
+                            <form class="table__formulario" method="POST" action="/admin/eventos/eliminar">
                                 <input type="hidden" name="id" value="<?php echo $evento->id?>">
                                 <button type="submit" class="table__accion table__accion--eliminar">
                                     <i class="fa-solid fa-circle-xmark"></i>

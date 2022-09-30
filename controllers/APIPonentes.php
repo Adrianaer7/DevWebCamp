@@ -17,7 +17,8 @@
                 return;
             }
 
-            $ponente = Ponente::find($id);
+            $ponente = Ponente::find($id) ?? [];    //si no encuentra ningun ponente con ese id, devuelvo []
+            
             echo json_encode($ponente);
         }
 

@@ -1,25 +1,46 @@
 (function () {
     const ponentesInput = document.querySelector("#ponentes")
-
+   
     if(ponentesInput) {
         let ponentes = []
         let ponentesFiltrados = []
-
+        
         //selecciono el ul
-        const listadoPonentes = document.querySelector("#listado-ponentes")
+        const listadoPonentes = document.querySelector("#listado-ponentes") //ul
         const ponenteHidden = document.querySelector('[name="ponente_id"]')
         obtenerPonentes()
-
+        
         //Cuando se escriba en el input
         ponentesInput.addEventListener("input", buscarPonentes)
+        
+        //si el input hidden trae de la bd del evento el id del ponente
+        if(ponenteHidden.value) {
+            (async () => {
+                //Obtener objeto con todos los datos del ponente
+                const ponente = await obtenerPonente(ponenteHidden.value)
+                const {nombre, apellido} = ponente
 
+                //Insertar en el html
+                const ponenteDOM = document.createElement("LI")
+                ponenteDOM.classList.add("listado-ponentes__ponente", "listado-ponentes__ponente--seleccionado")
+                ponenteDOM.textContent = `${nombre} ${apellido}`
+                listadoPonentes.appendChild(ponenteDOM) //agrego el li al ul
+            }) ();
+        }
+        
         async function obtenerPonentes() {
-            
             const url = `/api/ponentes`
             const respuesta = await fetch(url) 
             const resultado = await respuesta.json()
             
             formatearPonentes(resultado)
+        }
+
+        async function obtenerPonente(id) {
+            const url = `/api/ponente?id=${id}`
+            const respuesta = await fetch(url) 
+            const resultado = await respuesta.json()
+            return resultado
         }
 
         function formatearPonentes(arrayPonentes = []) {    //inicio el array vacio si no existe resultado
