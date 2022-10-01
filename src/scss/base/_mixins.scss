@@ -43,8 +43,8 @@
 
 @mixin grid($columnas, $espaciado ) {
     display: grid;
-    gap: $espaciado;
     grid-template-columns: repeat($columnas, 1fr);
+    gap: $espaciado;
 }
 
 @mixin contenedor {
@@ -72,6 +72,14 @@
     @include headings;
     margin: 6rem 0 3rem 0;
     text-align: center;
+}
+
+@mixin descripcion-pagina {
+    text-align: center;
+    font-size: 1.8rem;
+    font-weight: v.$delgada;
+    color: v.$gris-oscuro;
+    margin-bottom: 5rem;
 }
 
 @mixin texto-fluido($min, $max) {
@@ -168,5 +176,16 @@
         font-size: 1.4rem;
         color: v.$blanco;
         font-weight: v.$bold;
+    }
+}
+
+@mixin card {
+    border: 1px solid lighten(v.$gris, 10);
+    padding: 3rem;
+
+    &__nombre { //cualquier bloque que utilize este mixin, y herede un elemento con clase __nombre, se aplica este estilo tambien
+        font-weight: v.$black;
+        font-size: 2.6rem;
+        margin: 2rem 0;
     }
 }

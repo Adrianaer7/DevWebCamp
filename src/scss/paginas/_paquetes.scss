@@ -1,0 +1,38 @@
+@use "base/variables" as v;
+@use "base/mixins" as m;
+
+.paquetes { //main
+    &__grid {   //div
+        @include m.contenedor;
+        @include m.grid(1, 3rem);
+        @include m.tablet {
+            @include m.grid (3, 3rem);
+            align-items: flex-end;    //Si quito esto, cada div va a tomar como referencia el tamaño del div mas grande, de esta manera quedan todos los divs del mismo tamaño. Con flex-start todos los divs quedan alineados en la parte de arriba, pero solo ocupan en largo el tamaño necesario. Con flex-end, todos los divs quedan alineados en la parte de abajo, pero el div mas alto va a ser el que tenga mas contenido
+        }
+    }
+}
+
+.paquete {  //div
+    @include m.card;
+
+    &:nth-child(2) {    //selecciono el 2do div
+        order: -1;  //en vista tel. coloco el 2do div al principio de todo
+
+        @include m.tablet {
+            order: unset;   //en vista pc quito el order puesto anteriormente
+        }
+    }
+
+    &__lista {  //ul
+        @include m.reset-lista;
+        line-height: 2;
+    }
+
+    &__precio { //p
+        color: v.$azul;
+        font-weight: v.$black;
+        text-align: center;
+        font-size: 6rem;
+        margin: 3rem 0 0 0;
+    }
+}

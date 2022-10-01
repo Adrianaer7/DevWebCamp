@@ -1,0 +1,31 @@
+@use "base/variables" as v;
+@use "base/mixins" as m;
+
+.agenda {   //main
+    @include m.contenedor;
+    padding: 5rem 0;
+}
+
+.eventos {  //div
+    $modificador: &;    //creo una variable
+
+    &__heading {    //heading de conferencias
+        color: v.$azul;
+        margin: 5rem 0;
+        text-align: left;
+        font-size: clamp(2rem, -0.8rem + 8vw, 6rem);
+    }
+
+    &__fecha {  //p
+        color: v.$gris;
+        margin: 3rem 0 0 0;
+    }
+
+    &--workshops {  //modificacion del bloque eventos
+        #{$modificador}__heading {  //selecciono el heading de este bloque modificador. # hace quiere decir que voy a mezclar una variable($modificador) con uns string(__heading)
+            color: v.$secundario;
+        }
+    }
+
+
+}

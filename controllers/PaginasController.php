@@ -2,6 +2,7 @@
 
 namespace Controllers;
 
+use Model\Evento;
 use MVC\Router;
 
 class PaginasController {
@@ -37,7 +38,8 @@ class PaginasController {
     public static function conferencias(Router $router) {
         $titulo = "Conferencias & Workshops";
 
-        echo "conferencias";
+        $eventos = Evento::ordenar("hora_id", "ASC");
+        debugear($eventos);
         
         $router->render("paginas/conferencias", [
             "titulo" => $titulo
