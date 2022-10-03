@@ -19,14 +19,21 @@ const terser = require('gulp-terser-js');
 const concat = require('gulp-concat');
 const rename = require('gulp-rename')
 
+// Webpack
+const webpack = require("webpack-stream")
 
 const paths = {
     scss: 'src/scss/**/*.scss',
     js: 'src/js/**/*.js',
     imagenes: 'src/img/**/*'
 }
+
 function css() {
     return src(paths.scss)
+        .pipe(webpack({
+            mode: "production", //el modo desarrollo importa muchas cosas innecesarias
+            entry: "./src/js/app.js"    //que archivo tiene que leer
+        }))
         .pipe( sourcemaps.init())
         .pipe( sass({outputStyle: 'expanded'}))
         //.pipe( postcss([autoprefixer(), cssnano()]))

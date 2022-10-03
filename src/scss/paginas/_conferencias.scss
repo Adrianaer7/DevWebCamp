@@ -29,11 +29,11 @@
 }
 
 .evento {   //esta clase solo existe con elemento y/o modificador. La clase sola no está declarada en ningun lado del html
-    &__hora {   //
+    &__hora {   //p
         font-weight: v.$bold;
     }
     
-    &__informacion {
+    &__informacion {    //div
         padding: 2rem;
         border-radius: 1rem;
         background-color: v.$azul;
@@ -44,27 +44,28 @@
         }
     }
 
-    &__introduccion {
+    &__introduccion {   //p
         font-size: 1.6rem;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;  //cuantas lineas de texto quiero cortar
+        display: -webkit-box;   //crea una caja virtual para el texto. Al declarar esto, puedo declarar las demas webkits de abajo
+        -webkit-line-clamp: 2;  //indico cuantos renglones quiero que pertenezcan al texto. Los renglones que no forman parte del texto, siguen visibles pero no forman parte del <p>, entonces los elementos que estan abajo, suben para ocupar su lugar
         -webkit-box-orient: vertical;   //para que corte de arriba hacia abajo las lineas
-    }
+        overflow: hidden;   //oculto el texto que no pertenece al webkit clamp
+    }   
 
-    &__autor-info {
+    &__autor-info { //div
         display: flex;
         gap: 2rem;
         justify-content: space-between;
         align-items: center;
     }
 
-    &__imagen-autor {
+    &__imagen-autor {   //img
         width: 5rem;
         background-color: v.$blanco;
         border-radius: 50%;
     }
 
-    &__autor-nombre {
+    &__autor-nombre {   //p
         font-weight: v.$bold;
     }
 }
