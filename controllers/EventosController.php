@@ -43,7 +43,7 @@
 
             //Cruzo la informacion de los modelos
             foreach($eventos as $evento) {
-                //creo una propiedad "categoria" dentro de la clase evento que contiene el id y nombre, en la cual la id es igual a la de propiedad categoria_id
+                //creo una propiedad "categoria" dentro del objeto evento que contiene el id y nombre, en la cual la id es igual a la de propiedad categoria_id
                 $evento->categoria = Categoria::find($evento->categoria_id);
                 $evento->dia = Dia::find($evento->dia_id);
                 $evento->hora = Hora::find($evento->hora_id);
