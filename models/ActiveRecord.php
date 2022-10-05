@@ -160,8 +160,11 @@ class ActiveRecord {
     }
 
     //Traer un total de registros
-    public static function total() {
+    public static function total($columna = "", $valor = "") {
         $query = "SELECT COUNT(*) FROM " . static::$tabla;  //con el metodo count SQL consulta la cantidad total de elementos en una tabla
+        if($columna) {
+            $query .= " WHERE ${columna} = ${valor}";
+        }
         $resultado = self::$db->query($query);
         $total = $resultado->fetch_array(); //convierto el resultado a array
         return array_shift($total); //accedo al primer valor del array

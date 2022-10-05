@@ -30,10 +30,6 @@ const paths = {
 
 function css() {
     return src(paths.scss)
-        .pipe(webpack({
-            mode: "production", //el modo desarrollo importa muchas cosas innecesarias
-            entry: "./src/js/app.js"    //que archivo tiene que leer
-        }))
         .pipe( sourcemaps.init())
         .pipe( sass({outputStyle: 'expanded'}))
         //.pipe( postcss([autoprefixer(), cssnano()]))
@@ -42,8 +38,21 @@ function css() {
 }
 function javascript() {
     return src(paths.js)
+        .pipe(webpack({
+            module: {
+                rules: [
+                    {
+                        test: /\.css$/i, //va a identificar un archivo css
+                        use: ["style-loader", "css-loader"]
+                    }
+                ]
+            },
+            mode: "production", //el modo desarrollo importa muchas cosas innecesarias
+            entry: "./src/js/app.js",    //que archivo tiene que leer
+            watch: true
+        }))
       .pipe(sourcemaps.init())
-      .pipe(concat('bundle.js')) 
+      //.pipe(concat('bundle.js')) 
       .pipe(terser())
       .pipe(sourcemaps.write('.'))
       .pipe(rename({ suffix: '.min' }))
