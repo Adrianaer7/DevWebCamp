@@ -118,8 +118,8 @@
         &[href*="facebook.com"]::before {   //encuentra todos los enlaces que tengan ese href y le coloca el icono. Cada icono de font awesome tiene un codigo
             content: "\f09a";
         }
-        &[href*="tiktok.com"]::before {
-            content: "\e07b";
+        &[href*="twitter.com"]::before {
+            content: "\f099";
         }
         &[href*="instagram.com"]::before {
             content: "\f16d";
@@ -127,8 +127,8 @@
         &[href*="youtube.com"]::before {
             content: "\f167";
         }
-        &[href*="https:/www./twitter.com"]::before {
-            content: "\f099";
+        &[href*="tiktok.com"]::before {
+            content: "\e07b";
         }
         &[href*="github.com"]::before {
             content: "\f09b";

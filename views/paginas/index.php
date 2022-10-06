@@ -63,7 +63,7 @@
                         <?php if(!empty($redes->twitter)) {; ?>
                             <a class="speaker-sociales__enlace" rel="noopener noreferrer" target="_blank" href="<?php echo $redes->twitter ?>">
                                 <span class="speaker-sociales__ocultar">Twitter</span>
-                            </a> 
+                            </a>
                         <?php }; ?>
                         <?php if(!empty($redes->youtube)) {; ?>
                             <a class="speaker-sociales__enlace" rel="noopener noreferrer" target="_blank" href="<?php echo $redes->youtube ?>">
@@ -86,6 +86,7 @@
                             </a>
                         <?php }; ?>
                     </nav>
+
                     <ul class="speaker__listado-skills">
                         <?php 
                             $tags = explode(",", $ponente->tags);   //por cada coma que tenga el string de tags, voy añadiendo el elemento al array 
@@ -98,5 +99,6 @@
             </div>
         <?php }; ?>
     </div>
-    
 </section>
+
+<div id="mapa" class="mapa"></div>
