@@ -115,22 +115,22 @@
             -webkit-smoothing: antialiased; //para que los svg se vean bien
         }
 
-        &[href*="https://www.facebook.com"]::before {   //encuentra todos los enlaces que tengan ese href y le coloca el icono. Cada icono de font awesome tiene un codigo
+        &[href*="facebook.com"]::before {   //encuentra todos los enlaces que tengan ese href y le coloca el icono. Cada icono de font awesome tiene un codigo
             content: "\f09a";
         }
-        &[href*="https://www.tiktok.com"]::before {
+        &[href*="tiktok.com"]::before {
             content: "\e07b";
         }
-        &[href*="https://www.instagram.com"]::before {
+        &[href*="instagram.com"]::before {
             content: "\f16d";
         }
-        &[href*="https://www.youtube.com"]::before {
+        &[href*="youtube.com"]::before {
             content: "\f167";
         }
         &[href*="https:/www./twitter.com"]::before {
             content: "\f099";
         }
-        &[href*="https://www.github.com"]::before {
+        &[href*="github.com"]::before {
             content: "\f09b";
         }
         
@@ -167,6 +167,7 @@
 @mixin tags {   //se incluye en un div
     @include reset-lista;
     display: flex;
+    flex-wrap: wrap;
     gap: 1.5rem;
     margin-top: 1.5rem;
 
