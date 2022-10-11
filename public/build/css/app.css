@@ -673,6 +673,19 @@ h3 {
   margin: 0;
 }
 
+.boletos__grid {
+  width: min(95%, 60rem);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 5rem;
+}
+
+.boleto {
+  width: min(100% - 5rem, 65rem);
+  margin: 0 auto;
+  padding: 6rem;
+}
 .formulario {
   display: flex;
   flex-direction: column;

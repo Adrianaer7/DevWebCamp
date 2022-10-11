@@ -1,0 +1,26 @@
+@use "base/variables" as v;
+@use "base/mixins" as m;
+
+.boletos {
+    &__grid {
+        @include m.contenedor-sm;
+        @include m.grid(1, 5rem);
+    }
+}
+
+.boleto {
+    width: min(100% - 5rem, 65rem); //el tamaño minimo es 100% - 50px, el maximo 650px
+    margin: 0 auto;
+    padding: 6rem;
+    &--presencial {
+
+    }
+
+    &--presencial {
+        
+    }
+
+    &--presencial {
+        
+    }
+}
