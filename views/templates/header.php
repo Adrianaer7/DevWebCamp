@@ -16,7 +16,7 @@
             <?php } ?>
         </nav>
 
-        <div class="header__contenido">
+        <div class="header__contenido" data-aos="fade-right">
             <a href="/">
                 <h1 class="header__logo">&#60;DevWebCamp/></h1>
             </a>

@@ -110,4 +110,12 @@
                 "eventos" => $eventos_formateados
             ]);
         }
+
+        public static function error (Router $router) {
+            $titulo = "Página no encontrada";
+
+            $router->render("paginas/error", [
+                "titulo" => $titulo
+            ]);
+        }
     }
