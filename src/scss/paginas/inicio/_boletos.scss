@@ -25,7 +25,7 @@
         height: 5rem;
         top: calc(50% - 2.5rem);    //posiciono el circulo verticalmente. 2.5rem porque es la mitad de lo del width y height
     }
-    &::before { //
+    &::before {
         clip-path: circle(50% at 25% 50%);  //el primer valor es el del radius, el segundo es desde que punto horizontalmente empieza a hacer el circulo, el 3er valor es desde que punto verticalmente
         left: 0;    //posiciono el circulo horizontalmente en el borde izquierdo del div
     }
@@ -79,4 +79,71 @@
         @include m.boton(v.$azul, v.$blanco);
         width: auto;
     }
+
+    $modificador: &;
+    &--acceso { //div - boleto asignado al usuario al elegir plan
+        width: 30rem;
+        height: 50rem;
+        padding: 10rem 3rem;
+        @include m.tablet {
+            width: 60rem;
+            height: 30rem;
+            padding: 6rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        #{$modificador}__logo { //h4
+            @include m.texto-fluido(2rem, 3rem);
+            margin: 0;
+        }
+        #{$modificador}__nombre { //h4
+            font-size: 2.4rem;
+            text-transform: uppercase;
+            font-weight: v.$black;
+        }
+        #{$modificador}__codigo { //h4
+            font-size: 4rem;
+            font-weight: v.$bold;
+            text-align: center;
+            position: absolute;
+            bottom: 7rem;
+            margin: 0;
+            left: 0;    //para que se pegue a la izquierda
+            width: 100%;    //para que se centre y ocupe todo el ancho del div padre
+
+            @include m.tablet {
+                rotate: 90deg;  //coloco el texto de arriba hacia abajo
+                width: 30rem;   //ocupa el total de la altura del div padre
+                transform-origin: 0 0;  //facilita el posicionamiento del h4
+                top: 0; //coloca el h4 a la misma altura que el div
+                left: calc(100% - 5rem);    //pone el h4 en la parte izquierda del div
+            }
+        }
+    }
+
+    &::before {
+        clip-path: circle(50% at 50% 25%);
+        left: calc(50% - 2.5rem);   
+        top: 0; //lo coloco arriba de todo
+        @include m.tablet {
+            clip-path: circle(50% at 25% 50%); 
+            left: 0;    //es el mismo valor que el top
+            top: calc(50% - 2.5rem);    //es el mismo valor que el left
+            
+        }
+    }
+    &::after {
+        clip-path: circle(50% at 50% 75%);
+        left: calc(50% - 2.5rem);
+        top: calc(100% - 5rem); //lo coloco abajo de todo
+        @include m.tablet {
+            clip-path: circle(50% at 75% 50%);  
+            left: calc(100% - 5rem);    //es el mismo valor que el left
+            top: calc(50% - 2.5rem);    //es el mismo valor que el top
+            
+        }
+    }
+    
 }

@@ -107,8 +107,8 @@ class AuthController {
 
                     // Generar el Token
                     $usuario->crearToken();
-                    // Crear un nuevo usuario
                     
+                    // Crear un nuevo usuario
                     $resultado =  $usuario->guardar();
 
                     // Enviar email

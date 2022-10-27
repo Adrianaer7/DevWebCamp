@@ -10,6 +10,11 @@
             align-items: flex-end;    //Si quito esto, cada div va a tomar como referencia el tamaño del div mas grande, de esta manera quedan todos los divs del mismo tamaño. Con flex-start todos los divs quedan alineados en la parte de arriba, pero solo ocupan en largo el tamaño necesario. Con flex-end, todos los divs quedan alineados en la parte de abajo, pero el div mas alto va a ser el que tenga mas contenido
         }
     }
+
+    &__submit {
+        @include m.boton(v.$azul, v.$blanco);
+        margin-top: 3rem
+    }
 }
 
 .paquete {  //div
@@ -33,6 +38,6 @@
         font-weight: v.$black;
         text-align: center;
         font-size: 6rem;
-        margin: 3rem 0 0 0;
+        margin: 3rem 0 ;
     }
 }

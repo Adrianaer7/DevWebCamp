@@ -83,7 +83,7 @@
 }
 
 @mixin texto-fluido($min, $max) {
-    font-size: clamp($min, -0.8rem + 10vw ,$max);   //con clamp hago un texto fluido, le paso un valor minimo de tamaño de fuente, un maximo, y el valor del medio es el temaño que va a tomar el texto cuando el texto no llegue a su tamaño minimo ni maximo
+    font-size: clamp($min, -0.8rem + 10vw ,$max);   //con clamp hago un texto fluido, le paso un valor minimo de tamaño de fuente, un maximo, y el valor del medio es el tamaño que va a tomar el texto cuando el texto no llegue a su tamaño minimo ni maximo
 }
 
 @mixin texto-degradado($inicio, $final) {
