@@ -1,0 +1,84 @@
+@use "base/mixins" as m;
+@use "base/variables" as v;
+
+.eventos-registro { //div
+    @include m.contenedor;
+    @include m.tablet {
+        display: flex;
+        gap: 2rem;
+        align-items: flex-start;    //para que el aside se quede fijo en pantalla al hacer scroll
+    }
+
+    &__listado {    //main
+        @include m.tablet {
+            flex: 0 0 60%;
+        }
+    }
+
+    &__grid {   //div
+        @include m.grid(1, 3rem);
+        @include m.tablet {
+            @include m.grid(2, 3rem);
+        }
+    }
+
+    &__heading {    //h3
+        &--workshops,
+        &--conferencias {
+            white-space: nowrap;
+            @include m.texto-fluido(2rem, 5rem);
+            margin: 0 0 2rem 0;
+        }
+        &--conferencias {
+            color: v.$azul;
+        }
+        &--workshops {
+            color: v.$secundario;
+            margin-top: 5rem;
+        }
+    }
+
+    &__fecha {
+        margin: 6rem 0 3rem 0 ;
+    }
+}
+
+.registro { //aside
+    background-color: v.$gris-claro;
+    padding: 3rem;
+    border-radius: 1rem;
+    @include m.tablet {
+        flex: 0 0 40%;
+        position: -webkit-sticky;   //para que se quede fijo en pantalla al hacer scroll
+        position: sticky;
+        top: 3rem;  //separo el aside del borde superior de la pantalla
+    }
+    
+    &__heading {
+        margin: 0 0 3rem 0;
+    }
+
+    &__evento {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem;
+        &:nth-child(even) { //elementos par
+            background-color: darken(v.$gris-claro, 3);
+        }
+    }
+
+    &__nombre {
+        font-size: 2rem;
+        font-weight: v.$bold;
+        margin: 0;
+    }
+
+    &__eliminar {
+        all: unset;
+        color: v.$rojo;
+        &:hover {
+            cursor: pointer;
+        }
+    }
+}

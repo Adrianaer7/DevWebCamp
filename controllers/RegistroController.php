@@ -1,12 +1,19 @@
 <?php 
 
 
+
     namespace Controllers;
 
     use Model\Registro;
     use Model\Usuario;
     use MVC\Router;
     use Model\Paquete;
+    use Model\Evento;
+    use Model\Dia;
+    use Model\Hora;
+    use Model\Ponente;
+    use Model\Categoria;
+
 
 
     class RegistroController {
@@ -114,6 +121,54 @@
             $router->render("registro/boleto", [
                 "titulo" => $titulo,
                 "registro" => $registro
+            ]);
+        }
+
+        public static function conferencias(Router $router) {
+            $titulo = "Elige Workshops y Conferencias";
+
+            if(!is_auth()) {
+                header("Location: /login");
+            }
+
+            $usuario_id = $_SESSION["id"];
+
+            $registro = Registro::where("usuario_id", $usuario_id);
+            if(!$registro || $registro->paquete_id !== "1") {
+                header("Location: /");
+            }
+            
+            //Traigo todos los eventos, ordenados desde la primera hora hasta la ultima
+            $eventos = Evento::ordenar("hora_id", "ASC");
+
+            $eventos_formateados = [];
+
+            //Recorro el array de todos los eventos ordenados por hora
+            foreach($eventos as $evento) {
+                //creo una propiedad dentro del objeto evento en la cual la id de la propiedad del evento es igual a la que hay en el modelo consultado
+                $evento->categoria = Categoria::find($evento->categoria_id);
+                $evento->dia = Dia::find($evento->dia_id);
+                $evento->hora = Hora::find($evento->hora_id);
+                $evento->ponente = Ponente::find($evento->ponente_id);
+                
+                if($evento->dia_id === "1" && $evento->categoria_id === "1") {
+                    $eventos_formateados["conferencias_v"][] = $evento;
+                }
+                if($evento->dia_id === "2" && $evento->categoria_id === "1") {
+                    $eventos_formateados["conferencias_s"][] = $evento;
+                }
+                if($evento->dia_id === "1" && $evento->categoria_id === "2") {
+                    $eventos_formateados["workshops_v"][] = $evento;
+                }
+                if($evento->dia_id === "2" && $evento->categoria_id === "2") {
+                    $eventos_formateados["workshops_s"][] = $evento;
+                }
+            }
+
+            $router->render("registro/conferencias", [
+                "titulo" => $titulo,
+                "registro" => $registro,
+                "eventos" => $eventos_formateados
             ]);
         }
     }
