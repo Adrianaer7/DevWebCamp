@@ -1,3 +1,5 @@
+import Swal from "sweetalert2";
+
 (function() {
     let eventos = [];   //conferencias agregadas al finalizar registro
     
@@ -7,13 +9,24 @@
     eventosBoton.forEach(boton => boton.addEventListener("click", seleccionarEvento))
 
     function seleccionarEvento(e) {
-        e.target.disabled = true    //deshabilito el boton al que le doy click
-        eventos = [...eventos, {
-            id: e.target.dataset.id, //lo obtengo del data-id
-            titulo: e.target.parentElement.querySelector(".evento__nombre").textContent.trim()  //escalo hacia el emento padre del boton
-        }]
+        if(eventos.length < 5) {
+            e.target.disabled = true    //deshabilito el boton al que le doy click
+            eventos = [...eventos, {
+                id: e.target.dataset.id, //lo obtengo del data-id
+                titulo: e.target.parentElement.querySelector(".evento__nombre").textContent.trim()  //escalo hacia el emento padre del boton
+            }]
 
-        mostrarEventos()        
+            mostrarEventos()        
+        } else {
+            Swal.fire({
+                title: "Error",
+                text: "Maximo 5 eventos",
+                icon: "error",
+                confirmButtonText: "OK"
+            })
+        }
+        
+        
     }
 
     function mostrarEventos() {

@@ -13,8 +13,7 @@
     use Model\Hora;
     use Model\Ponente;
     use Model\Categoria;
-
-
+use Model\Regalo;
 
     class RegistroController {
 
@@ -165,10 +164,13 @@
                 }
             }
 
+            $regalos = Regalo::all("ASC");
+
             $router->render("registro/conferencias", [
                 "titulo" => $titulo,
                 "registro" => $registro,
-                "eventos" => $eventos_formateados
+                "eventos" => $eventos_formateados,
+                "regalos" => $regalos
             ]);
         }
     }
