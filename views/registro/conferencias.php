@@ -42,6 +42,7 @@
         <div id="registro-resumen" class="registro__resumen">
 
         </div>
+        
         <div class="registro__regalo">
             <label for="regalo" class="registro__label">Selecciona un regalo</label>
             <select id="regalo" class="registro__select">

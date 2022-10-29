@@ -4,7 +4,8 @@
 
     namespace Controllers;
 
-    use Model\Registro;
+use Dotenv\Util\Regex;
+use Model\Registro;
     use Model\Usuario;
     use MVC\Router;
     use Model\Paquete;
@@ -165,6 +166,36 @@ use Model\Regalo;
             }
 
             $regalos = Regalo::all("ASC");
+
+            //Manejando el registro $_POST
+            if($_SERVER["REQUEST_METHOD"] === "POST") {
+
+                if(!is_auth()) {
+                    header("Location: /login");
+                }
+
+                $eventos = explode(",", $_POST["eventos"]); //guardo las id de los eventos seleccionados en un array separados por coma
+                if(empty($eventos)) {   //en caso de que el usuario consiga enviar el formulario sin eventos seleccionados
+                    echo json_encode(["resultado" => false]);
+                    return;
+                }
+
+                //Obtener el registro del usuario
+                $registro = Registro::where("usuario_id", $_SESSION["id"]);
+                if(!isset($registro) || $registro->paquete_id !== "1") {   //en caso de que el usuario que no pagó el plan presencial o no tiene un pago hecho. Esto se hace por las dudas si el usuario llegó  hasta aca de alguna manera no valida 
+                    echo json_encode(["resultado" => false]);
+                    return;
+                }
+
+                //Validar la disponibilidad de los eventos seleccionados
+                foreach($eventos as $evento_id) {
+                    $evento = Evento::find($evento_id); //busco un evento por id
+                    if(!isset($evento) || $evento->disponibles === "0") {   //si no existe el evento o no hay cupos disponibles
+                        echo json_encode(["resultado" => false]);
+                        return;
+                    }
+                }
+            }
 
             $router->render("registro/conferencias", [
                 "titulo" => $titulo,
