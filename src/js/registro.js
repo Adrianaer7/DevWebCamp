@@ -111,6 +111,20 @@ import Swal from "sweetalert2";
             })
             const resultado = await respuesta.json()
             
+            if(resultado.resultado) {
+                Swal.fire(
+                    "Registro exitoso",
+                    "Tus conferencias se han almacenado",
+                    "success"
+                ).then(() => location.href =  `/boleto?id=${resultado.token}`)  //cuando presione en ok, va a redireccionar al usuario 
+            } else {
+                Swal.fire({
+                    title: "Error",
+                    text: "Hubo un error",
+                    icon: "error",
+                    confirmButtonText: "OK"
+                }).then(() => location.reload())    //regarga la pagina
+            }
         }
     
         

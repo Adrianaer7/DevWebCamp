@@ -29,7 +29,7 @@
             <!--boton pago paypal-->
             <div id="smart-button-container">
               <div style="text-align: center;">
-                <div id="paypal-button-container"></div>
+                <div id="paypal-button-container-presencial"></div>
               </div>
             </div>
 
@@ -45,6 +45,11 @@
 
             </ul>
             <p class="paquete__precio">$49</p>
+            <div id="smart-button-container">
+              <div style="text-align: center;">
+                <div id="paypal-button-container-virtual"></div>
+              </div>
+            </div>
         </div>
     </div>
 </main>
@@ -53,6 +58,8 @@
   <script src="https://www.paypal.com/sdk/js?client-id=ARV5zbhV00KgrFv8kfl9Ya0OyOpHnoHkT0GgvE7h7paCz7fZhz-0KPKYqS8CdL4nPWtF7beZsFwaZUdu&enable-funding=venmo&currency=USD" data-sdk-integration-source="button-factory"></script>
   <script>
     function initPayPalButton() {
+
+      //Pase presencial
       paypal.Buttons({
         style: {
           shape: 'rect',
@@ -91,7 +98,48 @@
         onError: function(err) {
           console.log(err);
         }
-      }).render('#paypal-button-container');
+      }).render('#paypal-button-container-presencial'); //indica en que elemento del html se muestra el boton
+
+      //Pase virtual
+      paypal.Buttons({
+        style: {
+          shape: 'rect',
+          color: 'blue',
+          layout: 'vertical',
+          label: 'pay',
+          
+        },
+
+        createOrder: function(data, actions) {
+          return actions.order.create({
+            purchase_units: [{"description":"2","amount":{"currency_code":"USD","value":49}}]
+          });
+        },
+
+        onApprove: function(data, actions) {
+          return actions.order.capture().then(function(orderData) {
+            const datos = new FormData()
+            datos.append("paquete_id", orderData.purchase_units[0].description) //dentro del objeto datos guardo la propiedad paquete_id y le asigno el valor de la descripcion que le puse arriba
+            datos.append("pago_id", orderData.purchase_units[0].payments.captures[0].id)  // el id de pago que genera automaticamente paypal al pagar. Este valor se puede encontrar en ID de transaccion de la factura en la cuenta bussiness 
+
+            const url = "/finalizar-registro/pagar"
+            fetch(url, {
+              method: "POST",
+              body: datos //al hacer este fetch, puedo obtener los datos desde $_POST en PHP
+            })
+            .then(respuesta => respuesta.json())  //obtengo la respuesta de PHP
+            .then(resultado => {
+              if(resultado.resultado) { //si el registro se guardo correctamente en la bd desde php, resultado es true por eso redirijo
+                actions.redirect("http://localhost:3000/finalizar-registro/conferencias")
+              }
+            })
+          });
+        },
+
+        onError: function(err) {
+          console.log(err);
+        }
+      }).render('#paypal-button-container-virtual');
     }
     initPayPalButton();
   </script>
